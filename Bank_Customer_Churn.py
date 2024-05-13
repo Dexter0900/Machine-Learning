@@ -20,7 +20,7 @@ df = df.set_index('CustomerId')
 
 df.info()
 
-### Encoding
+#Encoding
 
 df['Geography'].value_counts()
 
@@ -46,7 +46,7 @@ df['Zero Balance'].hist()
 
 df.groupby(['Churn', 'Geography']).count()
 
-###Define Label and Feature
+#Define Label and Feature
 
 df.columns
 
@@ -56,7 +56,7 @@ y = df['Churn']
 
 X.shape, y.shape
 
-###Handling Imbalance Data
+#Handling Imbalance Data
 
 df['Churn'].value_counts()
 
@@ -64,7 +64,7 @@ sns.countplot(x='Churn',data = df)
 
 X.shape, y.shape
 
-###Random Under Sampling
+#Random Under Sampling
 
 from imblearn.under_sampling import RandomUnderSampler
 
@@ -80,7 +80,7 @@ y_rus.value_counts()
 
 y_rus.plot(kind = 'hist')
 
-###   Random Over Sampling
+#   Random Over Sampling
 
 from imblearn.over_sampling import RandomOverSampler
 
@@ -96,47 +96,47 @@ y_ros.value_counts()
 
 y_ros.plot(kind='hist')
 
-###Train Test Split
+#Train Test Split
 
 from sklearn.model_selection import train_test_split
 
-#####Split Original Data
+#Split Original Data
 
 X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.3, random_state=2529)
 
-##### Split Random Under Sample **Data**
+#Split Random Under Sample **Data**
 
 X_train_rus, X_test_rus, y_train_rus, y_test_rus = train_test_split(X_rus, y_rus, test_size = 0.3, random_state = 2529)
 
-#####Split Random Over Sample Data
+#Split Random Over Sample Data
 
 X_train_ros, X_test_ros, y_train_ros, y_test_ros = train_test_split(X_ros, y_ros, test_size = 0.3, random_state = 2529)
 
-###Standardize Features
+#Standardize Features
 
 from sklearn.preprocessing import StandardScaler
 
 sc = StandardScaler()
 
-####Standardized Original Data
+#Standardized Original Data
 
 X_train[['CreditScore','Age','Tenure','Balance','Estimated Salary']] = sc.fit_transform(X_train[['CreditScore','Age','Tenure','Balance','Estimated Salary']])
 
 X_test[['CreditScore','Age','Tenure','Balance','Estimated Salary']] = sc.fit_transform(X_test[['CreditScore','Age','Tenure','Balance','Estimated Salary']])
 
-####Standard Random Under Sample Data
+#Standard Random Under Sample Data
 
 X_train_rus[['CreditScore','Age','Tenure','Balance','Estimated Salary']] = sc.fit_transform(X_train_rus[['CreditScore','Age','Tenure','Balance','Estimated Salary']])
 
 X_test_rus[['CreditScore','Age','Tenure','Balance','Estimated Salary']] = sc.fit_transform(X_test_rus[['CreditScore','Age','Tenure','Balance','Estimated Salary']])
 
-####Standard Random Over Sample Data
+#Standard Random Over Sample Data
 
 X_train_ros[['CreditScore','Age','Tenure','Balance','Estimated Salary']] = sc.fit_transform(X_train_ros[['CreditScore','Age','Tenure','Balance','Estimated Salary']])
 
 X_test_ros[['CreditScore','Age','Tenure','Balance','Estimated Salary']] = sc.fit_transform(X_test_ros[['CreditScore','Age','Tenure','Balance','Estimated Salary']])
 
-###Support Vector Machine Classifier
+#Support Vector Machine Classifier
 
 from sklearn.svm import SVC
 
@@ -146,7 +146,7 @@ svc.fit(X_train, y_train)
 
 y_pred = svc.predict(X_test)
 
-###Model Accuracy
+#Model Accuracy
 
 from sklearn.metrics import confusion_matrix, classification_report
 
@@ -154,7 +154,7 @@ confusion_matrix(y_test, y_pred)
 
 print(classification_report(y_test,y_pred))
 
-###Hyperparameter Tunning
+#Hyperparameter Tunning
 
 from sklearn.model_selection import GridSearchCV
 
@@ -174,7 +174,7 @@ confusion_matrix(y_test,grid_predictions)
 
 print(classification_report(y_test,grid_predictions))
 
-###Model with Random Under Sampling
+#Model with Random Under Sampling
 
 svc_rus = SVC()
 
@@ -182,13 +182,13 @@ svc_rus.fit(X_train_rus, y_train_rus)
 
 y_pred_rus = svc_rus.predict(X_test_rus)
 
-###Model Accuracy
+#Model Accuracy
 
 confusion_matrix(y_test_rus, y_pred_rus)
 
 print(classification_report(y_test_rus, y_pred_rus))
 
-###Hyperparameter Tunning
+#Hyperparameter Tunning
 
 param_grid = {'C':[0.1,1,10],
               'gamma':[1,0.1,0.01],
@@ -205,7 +205,7 @@ confusion_matrix(y_test_rus,grid_predictions_rus)
 
 print(classification_report(y_test_rus,grid_predictions_rus))
 
-###Model with Random Over Sampling
+#Model with Random Over Sampling
 
 svc_ros = SVC()
 
@@ -213,13 +213,13 @@ svc_ros.fit(X_train_ros, y_train_ros)
 
 y_pred_ros = svc_ros.predict(X_test_ros)
 
-###Model Accuracy
+#Model Accuracy
 
 confusion_matrix(y_test_ros, y_pred_ros)
 
 print(classification_report(y_test_ros, y_pred_ros))
 
-###Hyperparameter Tunning
+#Hyperparameter Tunning
 
 param_grind = {'C':[0.1,1,10],
                'gamma':[1,0.1,0.01],
@@ -237,7 +237,7 @@ confusion_matrix(y_test_ros,grid_predictions_ros)
 
 print(classification_report(y_test_ros,grid_predictions_ros))
 
-###Lets Compare
+#Lets Compare
 
 print(classification_report(y_test, y_pred))
 
